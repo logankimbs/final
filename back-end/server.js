@@ -3,6 +3,7 @@ const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
 const cookieParser = require('cookie-parser');
 const cookieSession = require('cookie-session');
+const users = require('./users.js');
 
 const app = express();
 
@@ -28,5 +29,8 @@ app.use(cookieSession({
         maxAge: 24 * 60 * 60 * 1000
     }
 }));
+
+// connection to users
+app.use('/api/users', users.routes);
 
 app.listen(3002, () => console.log('Server listening on port 3002'));
