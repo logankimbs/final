@@ -1,20 +1,20 @@
 <template>
     <div class="home">
-        <Login v-if="!user"/>
-        <div v-else>
-            <button class="btn btn-primary" @click="logoutUser()">Logout</button>
-        </div>
+        <Login v-if="!user" />
+        <Dashboard v-else />
     </div>
 </template>
 
 <script>
 import Login from '@/components/Login.vue';
+import Dashboard from '@/components/Dashboard.vue';
 import axios from 'axios';
 
 export default {
     name: 'Home',
     components: {
-        Login
+        Login,
+        Dashboard
     },
     async created() {
         try {
@@ -27,16 +27,6 @@ export default {
     computed: {
         user() {
             return this.$root.$data.user;
-        }
-    },
-    methods: {
-        async logoutUser() {
-            try {
-                await axios.delete("/api/users");
-                this.$root.$data.user = null;
-            } catch (error) {
-                this.$root.$data.user = null;
-            }
         }
     }
 }
