@@ -46,20 +46,20 @@ const User = mongoose.model('User', userSchema);
 const validUser = async (req, res, next) => {
     if (!req.session.userID) {
         return res.status(403).send({
-            message: "User was not logged in"
+            message: "user was not logged in"
         });
     }
     try {
         const user = await User.findOne({  _id: req.session.userID  });
         if (!user) {
             return res.status(403).send({
-                message: "User was not logged in"
+                message: "user was not logged in"
             });
         }
         req.user = user;
     } catch (error) {
         return res.status(403).send({
-            message: "User was not logged in"
+            message: "user was not logged in"
         });
     }
     next();
@@ -69,14 +69,14 @@ const validUser = async (req, res, next) => {
 router.post('/', async (req, res) => {
     if (!req.body.firstName || !req.body.lastName || !req.body.username || !req.body.password) {
         return res.status(400).send({
-            message: "Form is incomplete"
+            message: "form is incomplete"
         });
     }
     try {
         const existingUser = await User.findOne({  username: req.body.username  });
         if (existingUser) {
             return res.status(403).send({
-                message: "User already exists"
+                message: "user already exists"
             });
         } else {
             const user = new User({
@@ -102,11 +102,11 @@ router.post('/login', async (req, res) => {
         const user = await User.findOne({  username: req.body.username  });
         if (!user) {
             return res.status(403).send({
-                message: "Username is incorrect"
+                message: "username is incorrect"
             });
         } else if (!await user.comparePassword(req.body.password)) {
             return res.status(403).send({
-                message: "Password is incorrect"
+                message: "password is incorrect"
             })
         } else {
             req.session.userID = user._id;
