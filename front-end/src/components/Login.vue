@@ -2,6 +2,7 @@
     <div class="text-center">
         <div class="form-signin" v-if="show">
             <form>
+                <legend>Log In</legend>
                 <div class="mb-3">
                     <input type="text" class="form-control" placeholder="Username" v-model="usernameToLogin">
                 </div>
@@ -19,6 +20,7 @@
         
         <div class="form-signup" v-else>
             <form>
+                <legend>Sign Up</legend>
                 <div class="mb-3">
                     <input type="text" class="form-control" placeholder="First name" v-model="firstName">
                 </div>
@@ -123,5 +125,9 @@ export default {
     max-width: 330px;
     padding: 15px;
     margin: auto;
+}
+
+legend {
+    margin-bottom: 10px;
 }
 </style>
