@@ -87,7 +87,6 @@ export default {
 }
 </script>
 
-
 <style scoped>
 .btn-floating {
     position: fixed;
