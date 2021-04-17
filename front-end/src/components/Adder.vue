@@ -4,7 +4,6 @@
             <div class="modal-container">
                 <div class="modal-header">
                     <h5 class="modal-title" id="exampleModalLabel">Upload Photo</h5>
-                    <!-- <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button> -->
                 </div>
                 <form>
                     <div class="modal-body">
@@ -31,11 +30,14 @@
 
 <script>
 import axios from 'axios';
+
 export default {
     name: 'Adder',
+
     props: {
-        show: Boolean,
+        show: Boolean
     },
+
     data() {
         return {
             title: '',
@@ -45,6 +47,7 @@ export default {
             error: ''
         }
     },
+
     methods: {
         async upload() {
             try {
@@ -62,15 +65,14 @@ export default {
                 this.error = "Error: " + error.response.data.message;
             }
         },
+
         fileChanged(event) {
             this.file = event.target.files[0];
             this.url = URL.createObjectURL(this.file);
         },
+
         close() {
             this.$emit('close');
-        },
-        chooseImage() {
-            this.$refs.fileInput.click()
         }
     }
 }
@@ -102,23 +104,25 @@ export default {
     box-shadow: 0 2px 8px rgba(0, 0, 0, .33);
     transition: all 0.5s ease;
 }
+
 .modal-enter {
     opacity: 0;
 }
+
 .modal-leave-active {
     opacity: 0;
 }
+
 .modal-enter .modal-container,
 .modal-leave-active .modal-container {
     -webkit-transform: scale(1.1);
     transform: scale(1.1);
 }
 
-/* small screens */
+/* modal for small screens */
 @media only screen and (max-width: 767px) and (min-width: 300px) {
     .modal-container {
         width: 90%;
     }
 }
-
 </style>
