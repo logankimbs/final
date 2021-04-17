@@ -48,8 +48,8 @@ export default {
 
         async getAllPhotos() {
             try {
-                this.response = await axios.get("/api/photos");
-                this.photos = this.response.data;
+                let response = await axios.get('/api/photos/all');
+                this.photos = response.data;
             } catch (error) {
                 this.error = error.response.data.message;
             }
