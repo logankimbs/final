@@ -3,7 +3,12 @@
         <router-link to="/">
             <a class="navbar-brand">Plantae Bible</a>
         </router-link>
-        <div class="d-flex">
+        <div class="d-flex" v-if="!user">
+            <router-link to="/profile">
+                <button class="btn btn-outline-primary" title="View Profile">Log In</button>
+            </router-link>
+        </div>
+        <div class="d-flex" v-else>
             <router-link to="/profile">
                 <button class="btn btn-link" title="View Profile">
                     <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-person" viewBox="0 0 16 16">
@@ -27,6 +32,9 @@ import axios from 'axios';
 
 export default {
     name: 'Navbar',
+    props: {
+        user: {}
+    },
     methods: {
         async logoutUser() {
             try {

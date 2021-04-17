@@ -1,44 +1,28 @@
 <template>
     <div class="profile">
-        <Navbar />
-        <Gallery :photos="photos"/>
-        <Add />
+        <Login v-if="!this.$root.$data.user" />
+        <UserProfile v-else />
     </div>
 </template>
 
 <script>
-import Navbar from '@/components/Navbar.vue';
-import Gallery from '@/components/Gallery.vue';
-import Add from '@/components/Add.vue';
+import Login from '@/components/Login.vue';
+import UserProfile from '@/components/UserProfile.vue';
 import axios from 'axios';
 
 export default {
     name: 'Profile',
-    components: {
-        Navbar,
-        Gallery,
-        Add
-    },
-    created() {
-        this.getPhotos();
-    },
-    data() {
-        return {
-            photos: [],
-            error: ''
-        }
-    },
-    methods: {
-        async getPhotos() {
-            try {
-                this.response = await axios.get("/api/photos");
-                this.photos = this.response.data;
-            } catch (error) {
-                this.error = error.response.data.message;
-            }
 
-            console.log(this.photos);
-        },
+    components: {
+        Login,
+        UserProfile
+    },
+
+    async created() {
+        try {
+            let response = await axios.get('/api/users');
+            this.$root.$data.user = response.data.user;
+        } catch (error) {  this.$root.$data.user = null;  }
     }
 }
 </script>
