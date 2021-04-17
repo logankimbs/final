@@ -17,7 +17,6 @@
             </form>
             <button class="btn btn-success btn-sm" @click="setShow(false)">Create New Account</button>
         </div>
-        
         <div class="form-signup" v-else>
             <form>
                 <legend>Sign Up</legend>
@@ -49,6 +48,7 @@ import axios from 'axios';
 
 export default {
     name: 'Login',
+
     data() {
         return {
             show: true,
@@ -62,6 +62,7 @@ export default {
             error: ''
         }
     },
+    
     methods: {
         async loginUser() {
             this.errorToLogin = '';
