@@ -68,6 +68,17 @@ router.get('/', validUser, async (req, res) => {
     }
 });
 
+// get all photos
+router.get('/all', async (req, res) => {
+    try {
+        let photos = await Photo.find().sort({  created: -1  }).populate('user');
+        return res.send(photos);
+    } catch (error) {
+        console.log(error);
+        return res.sendStatus(500);
+    }
+});
+
 module.exports = {
     routes: router,
     model: Photo
