@@ -1,6 +1,6 @@
 <template>
     <div class="app container">
-        <nav class="navbar">
+        <nav class="navbar mb-3 mt-1">
             <router-link to="/">
                 <a class="navbar-brand">Plantae Bible</a>
             </router-link>
@@ -37,14 +37,13 @@ import axios from 'axios';
 
 export default {
     name: 'App',
+
     methods: {
         async logoutUser() {
             try {
                 await axios.delete("/api/users");
                 this.$root.$data.user = null;
-            } catch (error) {
-                this.$root.$data.user = null;
-            }
+            } catch (error) {  this.$root.$data.user = null;  }
         }
     }
 }
