@@ -1,6 +1,6 @@
 <template>
     <div class="photo">
-        Hello World
+        <img :src="photo.path" class="img-fluid" alt="Responsive image">
     </div>
 </template>
 
@@ -12,7 +12,7 @@ export default {
 
     data() {
         return {
-            photo: Object
+            photo: null
         }
     },
 
@@ -26,6 +26,7 @@ export default {
             try {
                 let response = await axios.get(`/api/photos/${this.$route.params.id}`);
                 this.photo = response.data;
+                console.log(this.photo);
             } catch (error) {  console.log(error);  }
         },
 
