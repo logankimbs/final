@@ -2,6 +2,7 @@ import Vue from 'vue'
 import VueRouter from 'vue-router'
 import Home from '../views/Home.vue'
 import Profile from '../views/Profile.vue'
+import Photo from '../views/Photo.vue'
 
 Vue.use(VueRouter)
 
@@ -13,6 +14,10 @@ const routes = [{
     path: '/profile',
     name: 'Profile',
     component: Profile
+}, {
+    path: '/photo',
+    name: 'Photo',
+    component: Photo
 }]
 
 const router = new VueRouter({
