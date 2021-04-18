@@ -1,10 +1,10 @@
 <template>
     <div class="photo">
-        <h1>{{this.photo.title}}</h1>
-        <h3>{{this.photo.user.username}}</h3>
-        <p>{{this.formatDate(this.photo.created)}}</p>
+        <h1>{{photo.title}}</h1>
+        <h3>{{photo.user.username}}</h3>
+        <p>{{formatDate(photo.created)}}</p>
         <img :src="photo.path" class="img-fluid" alt="Responsive image">
-        <p>{{this.photo.description}}</p>
+        <p>{{photo.description}}</p>
     </div>
 </template>
 
