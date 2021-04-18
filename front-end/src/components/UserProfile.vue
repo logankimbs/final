@@ -1,5 +1,6 @@
 <template>
     <div class="user-profile">
+        <h2 class="pb-2">{{this.$root.$data.user.username}}</h2>
         <Gallery :photos="photos" />
         <button class="btn btn-link btn-floating" @click="toggleAdder(true)">
             <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" fill="currentColor" class="bi bi-plus-circle-fill" viewBox="0 0 16 16">
