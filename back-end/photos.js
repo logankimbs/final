@@ -79,6 +79,7 @@ router.get('/all', async (req, res) => {
     }
 });
 
+// get photo
 router.get('/:id', async (req, res) => {
     try {
         let photo = await Photo.findOne({_id: req.params.id}).sort({
