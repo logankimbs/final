@@ -1,23 +1,29 @@
 <template>
     <div class="photo">
-        <h1>{{photo.title}}</h1>
-        <h3>{{photo.user.username}}</h3>
+        <h1>{{this.photo.title}}</h1>
+        <h3>{{this.photo.user.username}}</h3>
         <p>{{formatDate(photo.created)}}</p>
         <img :src="photo.path" class="img-fluid" alt="Responsive image">
         <p>{{photo.description}}</p>
+        <Comments />
     </div>
 </template>
 
 <script>
+import Comments from '@/components/Comments.vue';
 import axios from 'axios';
 import moment from 'moment';
 
 export default {
     name: 'Photo',
 
+    components: {
+        Comments
+    },
+
     data() {
         return {
-            photo: null
+            photo: Object
         }
     },
 
@@ -31,7 +37,6 @@ export default {
             try {
                 let response = await axios.get(`/api/photos/${this.$route.params.id}`);
                 this.photo = response.data;
-                console.log(this.photo);
             } catch (error) {  console.log(error);  }
         },
 
