@@ -18,9 +18,11 @@
         <form>
             <legend>Comment</legend>
             <div class="mb-3">
-                <textarea class="form-control" placeholder="Comment" v-model="this.comment"></textarea>
+                <textarea class="form-control" placeholder="Comment" v-model="newComment"></textarea>
             </div>
-            <button class="btn btn-primary" @click.prevent="submitComment()">Submit</button>
+            <div class="alert alert-danger mt-3 mb-3 mb-0 text-start" role="alert" v-if="error">{{this.error}}</div>
+            <button class="btn btn-primary" @click.prevent="setSubmitComment()">Submit</button>
+            <hr>
         </form>
 
         <div v-for="comment in comments" v-bind:key="comment._id">
@@ -50,8 +52,9 @@ export default {
         return {
             photo: Object,
             comments: Array,
-            comment: '',
-            show: false
+            newComment: '',
+            show: false,
+            error: ''
         }
     },
 
@@ -83,14 +86,25 @@ export default {
             } catch (error) {  console.log(error);  }
         },
 
+        setSubmitComment() {
+            this.error = '';
+            this.submitComment();
+            this.newComment = '';
+            this.getComments();
+        },
+
         async submitComment() {
-            try {
-                await axios.post(`/api/comments/${this.photo._id}`, {
-                    comment: this.comment,
-                    photo: this.$route.params.id,
-                    user: this.$root.$data.user
-                });
-            } catch (error) {  console.log(error);  }
+            if (this.newComment != '') {
+                try {
+                    await axios.post(`/api/comments/${this.$route.params.id}`, {
+                        comment: this.newComment,
+                        photo: this.$route.params.id,
+                        user: this.$root.$data.user
+                    });
+                } catch (error) {  console.log(error);  }
+            } else {
+                this.error = "Error: please provide a comment";
+            }
         },
 
         checkUser() {
@@ -118,10 +132,6 @@ export default {
         async updateFinished() {
             this.show = false;
             this.getPhoto();
-        },
-
-        async commentFinished() {
-            this.getComments();
         },
 
         toggleUpdater(value) {
