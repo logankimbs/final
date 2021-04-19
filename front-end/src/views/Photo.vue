@@ -68,6 +68,7 @@ export default {
     async created() {
         this.getPhoto();
         this.getComments();
+        this.getUser();
     },
 
     methods: {
@@ -85,6 +86,13 @@ export default {
                 let response = await axios.get(`/api/comments/${this.$route.params.id}`);
                 this.comments = response.data;
             } catch (error) {  /* console.log(error); */  }
+        },
+
+        async getUser() {
+            try {
+                let response = await axios.get('/api/users');
+                this.$root.$data.user = response.data.user;
+            } catch (error) {  this.$root.$data.user = null;  }
         },
 
         setSubmitComment() {
