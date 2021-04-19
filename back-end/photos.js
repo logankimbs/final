@@ -82,13 +82,23 @@ router.get('/all', async (req, res) => {
 // get photo
 router.get('/:id', async (req, res) => {
     try {
-        let photo = await Photo.findOne({_id: req.params.id}).sort({
-            created: -1
-        }).populate('user');
+        let photo = await Photo.findOne({  _id: req.params.id  }).sort({  created: -1  }).populate('user');
+        console.log(photo);
         return res.send(photo);
     } catch(error) {
         console.log(error);
         return res.sendStatus(500);
+    }
+});
+
+// delete photo
+router.delete('/:id', validUser, async (req, res) => {
+    try {
+        await Photo.deleteOne({  _id: req.params.id  });
+        res.sendStatus(200);
+    } catch (error) {
+        console.log(error);
+        res.sendStatus(500);
     }
 });
 

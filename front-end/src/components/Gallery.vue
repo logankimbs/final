@@ -1,18 +1,19 @@
 <template>
     <div class="row row-cols-1 row-cols-md-3 g-4">
-        <div class="col" v-for="photo in photos" :key="photo._id">
+        <div class="col mb-5" v-for="photo in photos" :key="photo._id"> 
+            <button class="btn btn-primary mb-1" @click="edit()">Edit</button>     
             <router-link class="card card-cover h-100 overflow-hidden text-white rounded-5 shadow-lg" :to="{name: 'Photo', params: {id: photo._id}}" :style="{ backgroundImage: 'url(' + photo.path + ')' }">
-            <div class="d-flex flex-column h-100 p-5 pb-3 text-white text-shadow-1">
-                <h2 class="pt-5 mt-5 mb-4 display-6 lh-1 fw-bold">{{photo.title}}</h2>
-                <ul class="d-flex list-unstyled mt-auto">
-                    <li class="d-flex align-items-center me-3">
-                        <small>{{photo.user.username}}</small>
-                    </li>
-                    <li class="d-flex align-items-center">
-                        <small>{{formatDate(photo.created)}}</small>
-                    </li>
-                </ul>
-            </div>
+                <div class="d-flex flex-column h-100 p-5 pb-3 text-white text-shadow-1">
+                    <h2 class="pt-5 mt-5 mb-4 display-6 lh-1 fw-bold">{{photo.title}}</h2>
+                    <ul class="d-flex list-unstyled mt-auto">
+                        <li class="d-flex align-items-center me-3">
+                            <small>{{photo.user.username}}</small>
+                        </li>
+                        <li class="d-flex align-items-center me-3">
+                            <small>{{formatDate(photo.created)}}</small>
+                        </li>
+                    </ul>
+                </div>
             </router-link>
         </div>
     </div>
@@ -35,6 +36,9 @@ export default {
             } else {
                 return moment(date).format('d MMMM YYYY');
             }
+        },
+        edit() {
+            console.log("edit!!");
         }
     }
 }

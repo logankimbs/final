@@ -46,7 +46,7 @@ export default {
                 this.$root.$data.user = response.data.user;
             } catch (error) {  this.$root.$data.user = null;  }
         },
-
+        
         formatDate(date) {
             if (moment(date).diff(Date.now(), 'days') < 15) {
                 return moment(date).fromNow();
