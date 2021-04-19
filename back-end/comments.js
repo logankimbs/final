@@ -48,7 +48,7 @@ router.post('/:id', validUser, async (req, res) => {
 });
 
 // get comments
-router.get('/:id', validUser, async (req, res) => {
+router.get('/:id', async (req, res) => {
     try {
         let comments = await Comment.find({  photo: req.params.id  }).sort({  created: -1  }).populate('user');
         return res.send(comments);

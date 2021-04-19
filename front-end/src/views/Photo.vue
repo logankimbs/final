@@ -3,10 +3,10 @@
         <Updater :photo="photo" :show="show" @close="close" @updateFinished="updateFinished" />
 
         <h1>{{this.photo.title}}</h1>
-        <h3>{{this.photo.user.username}}</h3>
+        <h3>{{this.user.username}}</h3>
         <p>{{formatDate(photo.created)}}</p>
 
-        <div class="mb-2" v-if="checkUser()">
+        <div class="mb-2" v-if="showEdit()">
             <button class="btn btn-outline-primary me-2" to="/profile" @click="toggleUpdater(true)">Edit</button>
             <router-link to="/profile">
                 <button class="btn btn-outline-danger me-2" to="/profile" @click="deletePhoto()">Delete</button>
@@ -16,7 +16,7 @@
         <img :src="photo.path" class="img-fluid" alt="Responsive image">
         <p class="mt-3 mb-4 px-2">{{photo.description}}</p>
 
-        <form class="mb-4">
+        <form class="mb-4" v-if="this.$root.$data.user">
             <legend>Comment</legend>
             <div class="mb-3">
                 <textarea class="form-control" placeholder="Comment" v-model="newComment"></textarea>
@@ -24,6 +24,7 @@
             <div class="alert alert-danger mt-3 mb-3 mb-0 text-start" role="alert" v-if="error">{{this.error}}</div>
             <button class="btn btn-primary" @click.prevent="setSubmitComment()">Submit</button>
         </form>
+
         <div class="mb-5">
             <div v-for="comment in comments" v-bind:key="comment._id">
                 <hr>
@@ -56,14 +57,16 @@ export default {
             photo: Object,
             comments: Array,
             newComment: '',
+            user: {
+                id: ''
+            },
             show: false,
             error: ''
         }
     },
 
-    created() {
+    async created() {
         this.getPhoto();
-        this.getUser();
         this.getComments();
     },
 
@@ -72,14 +75,9 @@ export default {
             try {
                 let response = await axios.get(`/api/photos/${this.$route.params.id}`);
                 this.photo = response.data;
+                this.user = this.photo.user;
+                this.user.id = this.user._id;
             } catch (error) {  /* console.log(error); */  }
-        },
-
-        async getUser() {
-            try {
-                let response = await axios.get('/api/users');
-                this.$root.$data.user = response.data.user;
-            } catch (error) {  this.$root.$data.user = null;  }
         },
 
         async getComments() {
@@ -109,14 +107,6 @@ export default {
                 this.error = "Error: please provide a comment";
             }
         },
-
-        checkUser() {
-            // if (this.photo.user._id != this.$root.$data.user._id) {
-            //     return false;
-            // } else {
-            //     return true;
-            // }
-        },
         
         formatDate(date) {
             if (moment(date).diff(Date.now(), 'days') < 15) {
@@ -143,6 +133,18 @@ export default {
 
         close() {
             this.show = false;
+        },
+
+        showEdit() {
+            if (this.$root.$data.user === null) {
+                return false;
+            } else {
+                if (this.$root.$data.user._id === this.user.id) {
+                    return true;
+                } else {
+                    return false;
+                }
+            }
         }
     }
 }

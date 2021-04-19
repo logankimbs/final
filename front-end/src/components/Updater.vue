@@ -32,7 +32,7 @@ export default {
     name: 'Updater',
 
     props: {
-        photo: Object,
+        photo: {},
         show: Boolean
     },
 
