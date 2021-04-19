@@ -22,7 +22,7 @@
                 <textarea class="form-control" placeholder="Comment" v-model="newComment"></textarea>
             </div>
             <div class="alert alert-danger mt-3 mb-3 mb-0 text-start" role="alert" v-if="error">{{this.error}}</div>
-            <button class="btn btn-primary" @click.prevent="setSubmitComment()">Submit</button>
+            <button class="btn btn-primary" @click.prevent="stageComment()">Submit</button>
         </form>
 
         <div class="mb-5">
@@ -95,14 +95,14 @@ export default {
             } catch (error) {  this.$root.$data.user = null;  }
         },
 
-        setSubmitComment() {
-            this.error = '';
+        stageComment() {
             this.submitComment();
             this.newComment = '';
             this.getComments();
         },
 
         async submitComment() {
+            this.error = '';
             if (this.newComment != '') {
                 try {
                     await axios.post(`/api/comments/${this.$route.params.id}`, {
