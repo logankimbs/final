@@ -1,5 +1,6 @@
 <template>
     <div class="home">
+        <h2>Explore</h2>
         <Gallery :photos="photos" />
     </div>
 </template>

@@ -1,37 +1,40 @@
 <template>
     <div class="photo">
-        <div class="mb-2" v-if="checkUser()">
-            <button class="btn btn-primary me-2" to="/profile" @click="toggleUpdater(true)">Edit</button>
-            <router-link to="/profile">
-                <button class="btn btn-outline-danger me-2" to="/profile" @click="deletePhoto()">Delete</button>
-            </router-link>
-        </div>
-        
         <Updater :photo="photo" :show="show" @close="close" @updateFinished="updateFinished" />
 
         <h1>{{this.photo.title}}</h1>
         <h3>{{this.photo.user.username}}</h3>
         <p>{{formatDate(photo.created)}}</p>
-        <img :src="photo.path" class="img-fluid" alt="Responsive image">
-        <p>{{photo.description}}</p>
 
-        <form>
+        <div class="mb-2" v-if="checkUser()">
+            <button class="btn btn-outline-primary me-2" to="/profile" @click="toggleUpdater(true)">Edit</button>
+            <router-link to="/profile">
+                <button class="btn btn-outline-danger me-2" to="/profile" @click="deletePhoto()">Delete</button>
+            </router-link>
+        </div>
+
+        <img :src="photo.path" class="img-fluid" alt="Responsive image">
+        <p class="mt-3 mb-4 px-2">{{photo.description}}</p>
+
+        <form class="mb-4">
             <legend>Comment</legend>
             <div class="mb-3">
                 <textarea class="form-control" placeholder="Comment" v-model="newComment"></textarea>
             </div>
             <div class="alert alert-danger mt-3 mb-3 mb-0 text-start" role="alert" v-if="error">{{this.error}}</div>
             <button class="btn btn-primary" @click.prevent="setSubmitComment()">Submit</button>
-            <hr>
         </form>
-
-        <div v-for="comment in comments" v-bind:key="comment._id">
-            <div class="comment-card">
-                <p class="comment-name">{{comment.user.firstName + " " + comment.user.lastName}}</p>
-                <p class="comment-comment">{{comment.comment}}</p>
-                <p class="photoDate">{{formatDate(comment.created)}}</p>
+        <div class="mb-5">
+            <div v-for="comment in comments" v-bind:key="comment._id">
+                <hr>
+                <div class="comment">
+                    <p class="mb-2 text-bold">
+                        <strong>{{comment.user.firstName + " " + comment.user.lastName}}</strong>
+                    </p>
+                    <p class="px-2 mb-1">{{comment.comment}}</p>
+                    <small class="text-muted">{{formatDate(comment.created)}}</small>
+                </div>
             </div>
-            <hr>
         </div>
     </div>
 </template>
