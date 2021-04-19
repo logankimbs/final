@@ -32,6 +32,32 @@ const commentShema = new mongoose.Schema({
 // comment model
 const Comment = mongoose.model('Comment', commentShema);
 
+// create comment
+router.post('/:id', validUser, async (req, res) => {
+    try {
+        const comment = new Comment({
+            comment: req.body.comment,
+            user: req.user,
+            photo: req.body.photo
+        });
+        await comment.save();
+    } catch (error) {
+        console.log(error);
+        return res.sendStatus(500);
+    }
+});
+
+// get comments
+router.get('/:id', validUser, async (req, res) => {
+    try {
+        let comments = await Comment.find({  photo: req.params.id  }).sort({  created: -1  }).populate('user');
+        return res.send(comments);
+    } catch (error) {
+        console.log(error);
+        return res.sendStatus(500);
+    }
+});
+
 module.exports = {
     routes: router,
     model: Comment
