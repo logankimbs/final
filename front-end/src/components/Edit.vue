@@ -36,7 +36,7 @@ export default {
         async deletePhoto() {
             try {
                 await axios.delete(`/api/photos/${this.$route.params.id}`);
-            } catch (error) {  console.log(error);  }
+            } catch (error) {  /* console.log(error); */  }
         }
     }
 }

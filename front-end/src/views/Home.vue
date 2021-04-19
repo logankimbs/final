@@ -32,7 +32,7 @@ export default {
             try {
                 let response = await axios.get('/api/photos/all');
                 this.photos = response.data;
-            } catch (error) {  console.log(error);  }
+            } catch (error) {  /* console.log(error); */  }
         },
 
         async getUser() {

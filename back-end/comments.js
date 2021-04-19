@@ -42,7 +42,7 @@ router.post('/:id', validUser, async (req, res) => {
         });
         await comment.save();
     } catch (error) {
-        console.log(error);
+        // console.log(error);
         return res.sendStatus(500);
     }
 });
@@ -53,7 +53,7 @@ router.get('/:id', validUser, async (req, res) => {
         let comments = await Comment.find({  photo: req.params.id  }).sort({  created: -1  }).populate('user');
         return res.send(comments);
     } catch (error) {
-        console.log(error);
+        // console.log(error);
         return res.sendStatus(500);
     }
 });

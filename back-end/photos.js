@@ -51,7 +51,7 @@ router.post('/', validUser, upload.single('photo'), async (req, res) => {
             await photo.save();
             return res.sendStatus(200);
         } catch (error) {
-            console.log(error);
+            // console.log(error);
             return res.sendStatus(500);
         }
     }
@@ -63,7 +63,7 @@ router.get('/', validUser, async (req, res) => {
         let photos = await Photo.find({  user: req.user  }).sort({  created: -1  }).populate('user');
         return res.send(photos);
     } catch (error) {
-        console.log(error);
+        // console.log(error);
         return res.sendStatus(500);
     }
 });
@@ -74,7 +74,7 @@ router.get('/all', async (req, res) => {
         let photos = await Photo.find().sort({  created: -1  }).populate('user');
         return res.send(photos);
     } catch (error) {
-        console.log(error);
+        // console.log(error);
         return res.sendStatus(500);
     }
 });
@@ -85,7 +85,7 @@ router.get('/:id', async (req, res) => {
         let photo = await Photo.findOne({  _id: req.params.id  }).sort({  created: -1  }).populate('user');
         return res.send(photo);
     } catch(error) {
-        console.log(error);
+        // console.log(error);
         return res.sendStatus(500);
     }
 });
@@ -99,7 +99,7 @@ router.put('/:id', validUser, async (req, res) => {
         photo.save();
         res.send(photo);
     } catch (error) {
-        console.log(error);
+        // console.log(error);
         return res.sendStatus(500);
     }
 });
@@ -110,7 +110,7 @@ router.delete('/:id', validUser, async (req, res) => {
         await Photo.deleteOne({  _id: req.params.id  });
         res.sendStatus(200);
     } catch (error) {
-        console.log(error);
+        // console.log(error);
         res.sendStatus(500);
     }
 });

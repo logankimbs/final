@@ -54,7 +54,7 @@ export default {
                     description: this.photo.description
                 });
                 this.$emit('updateFinished');
-            } catch (error) {  console.log(error);  }
+            } catch (error) {  /* console.log(error); */  }
         },
 
         fileChanged(event) {

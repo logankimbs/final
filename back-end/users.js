@@ -20,7 +20,7 @@ userSchema.pre('save', async function(next) {
         this.password = hash;
         next();
     } catch (error) {
-        console.log(error);
+        // console.log(error);
         next(error);
     }
 });
@@ -90,7 +90,7 @@ router.post('/', async (req, res) => {
             return res.send({  user: user  });
         }
     } catch (error) {
-        console.log(error);
+        // console.log(error);
         return res.sendStatus(500);
     }
 });
@@ -113,7 +113,7 @@ router.post('/login', async (req, res) => {
             return res.send({  user: user  });
         }
     } catch (error) {
-        console.log(error);
+        // console.log(error);
         return res.sendStatus(500);
     }
 });
@@ -123,7 +123,7 @@ router.get('/', validUser, async (req, res) => {
     try {
         res.send({  user: req.user  });
     } catch (error) {
-        console.log(error);
+        // console.log(error);
         return res.sendStatus(500);
     }
 });
@@ -134,7 +134,7 @@ router.delete('/', validUser, async (req, res) => {
         req.session = null;
         res.sendStatus(200);
     } catch (error) {
-        console.log(error);
+        // console.log(error);
         return res.sendStatus(500);
     }
 });

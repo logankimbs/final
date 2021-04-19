@@ -72,7 +72,7 @@ export default {
             try {
                 let response = await axios.get(`/api/photos/${this.$route.params.id}`);
                 this.photo = response.data;
-            } catch (error) {  console.log(error);  }
+            } catch (error) {  /* console.log(error); */  }
         },
 
         async getUser() {
@@ -86,7 +86,7 @@ export default {
             try {
                 let response = await axios.get(`/api/comments/${this.$route.params.id}`);
                 this.comments = response.data;
-            } catch (error) {  console.log(error);  }
+            } catch (error) {  /* console.log(error); */  }
         },
 
         setSubmitComment() {
@@ -104,7 +104,7 @@ export default {
                         photo: this.$route.params.id,
                         user: this.$root.$data.user
                     });
-                } catch (error) {  console.log(error);  }
+                } catch (error) {  /* console.log(error); */  }
             } else {
                 this.error = "Error: please provide a comment";
             }
@@ -129,7 +129,7 @@ export default {
         async deletePhoto() {
             try {
                 await axios.delete(`/api/photos/${this.$route.params.id}`);
-            } catch (error) { console.log(error);  }
+            } catch (error) { /* console.log(error); */  }
         },
 
         async updateFinished() {
