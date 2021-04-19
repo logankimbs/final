@@ -37,8 +37,8 @@ router.post('/:id', validUser, async (req, res) => {
     try {
         const comment = new Comment({
             comment: req.body.comment,
-            user: req.user,
-            photo: req.body.photo
+            photo: req.body.photo,
+            user: req.user
         });
         await comment.save();
     } catch (error) {

@@ -5,6 +5,7 @@ const cookieParser = require('cookie-parser');
 const cookieSession = require('cookie-session');
 const users = require('./users.js');
 const photos = require('./photos.js');
+const comments = require('./comments.js');
 
 const app = express();
 
@@ -36,5 +37,8 @@ app.use('/api/users', users.routes);
 
 // connection to photos
 app.use('/api/photos', photos.routes);
+
+// connection to comments
+app.use('/api/comments', comments.routes);
 
 app.listen(3002, () => console.log('Server listening on port 3002'));

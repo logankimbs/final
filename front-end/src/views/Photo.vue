@@ -14,7 +14,16 @@
         <p>{{formatDate(photo.created)}}</p>
         <img :src="photo.path" class="img-fluid" alt="Responsive image">
         <p>{{photo.description}}</p>
-        <Comments />
+        <Comments :photo="photo" @commentCreated="commentCreated" />
+
+        <div v-for="comment in comments" v-bind:key="comment._id">
+            <div class="comment-card">
+                <p class="comment-name">{{comment.user.firstName + " " + comment.user.lastName}}</p>
+                <p class="comment-comment">{{comment.comment}}</p>
+                <p class="photoDate">{{formatDate(comment.created)}}</p>
+            </div>
+            <hr>
+        </div>
     </div>
 </template>
 
@@ -35,6 +44,7 @@ export default {
     data() {
         return {
             photo: Object,
+            comments: null,
             show: false
         }
     },
@@ -42,6 +52,7 @@ export default {
     created() {
         this.getPhoto();
         this.getUser();
+        this.getComments();
     },
 
     methods: {
@@ -57,6 +68,14 @@ export default {
                 let response = await axios.get('/api/users');
                 this.$root.$data.user = response.data.user;
             } catch (error) {  this.$root.$data.user = null;  }
+        },
+
+        async getComments() {
+            try {
+                let response = await axios.get(`/api/comments/${this.$route.params.id}`);
+                this.comments = response.data;
+                console.log(response.data);
+            } catch (error) {  console.log(error);  }
         },
 
         checkUser() {
@@ -92,6 +111,10 @@ export default {
         async updateFinished() {
             this.show = false;
             this.getPhoto();
+        },
+
+        async commentCreated() {
+            this.getComments();
         }
     }
 }

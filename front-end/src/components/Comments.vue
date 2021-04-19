@@ -9,6 +9,7 @@
                 <button class="btn btn-primary" @click.prevent="submitComment()">Submit</button>
             </form>
         </div>
+        <hr>
     </div>
 </template>
 
@@ -18,6 +19,10 @@ import axios from 'axios';
 export default {
     name: 'Comments',
 
+    props: {
+        photo: Object
+    },
+
     data() {
         return {
             comment: ''
@@ -26,8 +31,8 @@ export default {
 
     methods: {
         async submitComment() {
-            try{
-                await axios.post(`/api/comments/${this.$route.params.id}`, {
+            try {
+                await axios.post(`/api/comments/${this.photo._id}`, {
                     comment: this.comment,
                     photo: this.$route.params.id,
                     user: this.$root.$data.user
