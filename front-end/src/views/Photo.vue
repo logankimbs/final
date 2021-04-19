@@ -14,7 +14,14 @@
         <p>{{formatDate(photo.created)}}</p>
         <img :src="photo.path" class="img-fluid" alt="Responsive image">
         <p>{{photo.description}}</p>
-        <Comments :photo="photo" @commentCreated="commentCreated" />
+
+        <form>
+            <legend>Comment</legend>
+            <div class="mb-3">
+                <textarea class="form-control" placeholder="Comment" v-model="this.comment"></textarea>
+            </div>
+            <button class="btn btn-primary" @click.prevent="submitComment()">Submit</button>
+        </form>
 
         <div v-for="comment in comments" v-bind:key="comment._id">
             <div class="comment-card">
@@ -29,7 +36,6 @@
 
 <script>
 import Updater from '@/components/Updater.vue';
-import Comments from '@/components/Comments.vue';
 import axios from 'axios';
 import moment from 'moment';
 
@@ -37,14 +43,14 @@ export default {
     name: 'Photo',
 
     components: {
-        Updater,
-        Comments
+        Updater
     },
 
     data() {
         return {
             photo: Object,
-            comments: null,
+            comments: Array,
+            comment: '',
             show: false
         }
     },
@@ -74,7 +80,16 @@ export default {
             try {
                 let response = await axios.get(`/api/comments/${this.$route.params.id}`);
                 this.comments = response.data;
-                console.log(response.data);
+            } catch (error) {  console.log(error);  }
+        },
+
+        async submitComment() {
+            try {
+                await axios.post(`/api/comments/${this.photo._id}`, {
+                    comment: this.comment,
+                    photo: this.$route.params.id,
+                    user: this.$root.$data.user
+                });
             } catch (error) {  console.log(error);  }
         },
 
@@ -100,21 +115,21 @@ export default {
             } catch (error) { console.log(error);  }
         },
 
+        async updateFinished() {
+            this.show = false;
+            this.getPhoto();
+        },
+
+        async commentFinished() {
+            this.getComments();
+        },
+
         toggleUpdater(value) {
             this.show = value;
         },
 
         close() {
             this.show = false;
-        },
-
-        async updateFinished() {
-            this.show = false;
-            this.getPhoto();
-        },
-
-        async commentCreated() {
-            this.getComments();
         }
     }
 }
