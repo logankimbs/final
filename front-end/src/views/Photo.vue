@@ -1,8 +1,14 @@
 <template>
     <div class="photo">
-        <div v-if="checkUser()">
-            <button class="btn btn-outline-danger">Delete</button>
+        <div class="mb-2" v-if="checkUser()">
+            <button class="btn btn-primary me-2" to="/profile" @click="toggleUpdater(true)">Edit</button>
+            <router-link to="/profile">
+                <button class="btn btn-outline-danger me-2" to="/profile" @click="deletePhoto()">Delete</button>
+            </router-link>
         </div>
+        
+        <Updater :photo="photo" :show="show" @close="close" @updateFinished="updateFinished" />
+
         <h1>{{this.photo.title}}</h1>
         <h3>{{this.photo.user.username}}</h3>
         <p>{{formatDate(photo.created)}}</p>
@@ -13,6 +19,7 @@
 </template>
 
 <script>
+import Updater from '@/components/Updater.vue';
 import Comments from '@/components/Comments.vue';
 import axios from 'axios';
 import moment from 'moment';
@@ -21,12 +28,14 @@ export default {
     name: 'Photo',
 
     components: {
+        Updater,
         Comments
     },
 
     data() {
         return {
-            photo: Object
+            photo: Object,
+            show: false
         }
     },
 
@@ -64,6 +73,25 @@ export default {
             } else {
                 return moment(date).format('d MMMM YYYY');
             }
+        },
+
+        async deletePhoto() {
+            try {
+                await axios.delete(`/api/photos/${this.$route.params.id}`);
+            } catch (error) { console.log(error);  }
+        },
+
+        toggleUpdater(value) {
+            this.show = value;
+        },
+
+        close() {
+            this.show = false;
+        },
+
+        async updateFinished() {
+            this.show = false;
+            this.getPhoto();
         }
     }
 }
