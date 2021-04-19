@@ -111,11 +111,11 @@ export default {
         },
 
         checkUser() {
-            if (this.photo.user._id != this.$root.$data.user._id) {
-                return false;
-            } else {
-                return true;
-            }
+            // if (this.photo.user._id != this.$root.$data.user._id) {
+            //     return false;
+            // } else {
+            //     return true;
+            // }
         },
         
         formatDate(date) {
