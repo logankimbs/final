@@ -1,5 +1,8 @@
 <template>
     <div class="photo">
+        <div v-if="checkUser()">
+            <button class="btn btn-outline-danger">Delete</button>
+        </div>
         <h1>{{this.photo.title}}</h1>
         <h3>{{this.photo.user.username}}</h3>
         <p>{{formatDate(photo.created)}}</p>
@@ -45,6 +48,14 @@ export default {
                 let response = await axios.get('/api/users');
                 this.$root.$data.user = response.data.user;
             } catch (error) {  this.$root.$data.user = null;  }
+        },
+
+        checkUser() {
+            if (this.photo.user._id != this.$root.$data.user._id) {
+                return false;
+            } else {
+                return true;
+            }
         },
         
         formatDate(date) {
